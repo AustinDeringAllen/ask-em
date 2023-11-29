@@ -11,6 +11,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import NotificationBell from "./NoitificationBell";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 export default function AuthButton() {
   const { data: sessionData } = useSession();
@@ -29,24 +30,27 @@ export default function AuthButton() {
     <div className="flex items-center gap-4">
       <NotificationBell />
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex items-center gap-2.5">
-          <div className="relative h-8 w-8 rounded-full bg-blue-500">
+        <DropdownMenuTrigger className="flex items-center">
+          <div className="flex items-center gap-1.5">
             {sessionData.user.image ? (
-              <Image
-                src={sessionData.user.image}
-                fill
-                objectFit="cover"
-                alt=""
-                className="rounded-full"
-              />
+              <div className="relative h-8 w-8">
+                <Image
+                  src={sessionData.user.image}
+                  fill
+                  objectFit="cover"
+                  alt=""
+                  className="rounded-full"
+                />
+              </div>
             ) : (
               <div className="h-8 w-8 rounded-full bg-gray-300">
                 {(sessionData.user.name?.match(/[a-zA-Z]/) ?? ["?"])?.pop()}
               </div>
             )}
+
+            <p>{sessionData.user.name ?? "User"}</p>
           </div>
-          <p>{sessionData.user.name ?? "User"}</p>
-          <p>⬇</p>
+          <IoMdArrowDropdown className="mt-1" />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
