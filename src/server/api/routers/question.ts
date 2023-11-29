@@ -14,4 +14,15 @@ export const questionRouter = createTRPCRouter({
 
       return newQuestion;
     }),
+  getAllQuestionsForUser: publicProcedure
+    .input(z.object({ uid: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const userQuestions = ctx.db.question.findMany({
+        where: {
+          uid: input.uid,
+        },
+      });
+
+      return userQuestions;
+    }),
 });

@@ -28,4 +28,27 @@ export const userRouter = createTRPCRouter({
 
     return users;
   }),
+  getUserPage: publicProcedure
+    .input(z.object({ uid: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const userPage = await ctx.db.user.findFirst({
+        where: {
+          id: input.uid,
+        },
+        select: {
+          name: true,
+          image: true,
+          questions: {
+            orderBy: {
+              createdAt: "desc",
+            },
+            select: {
+              body: true,
+            },
+          },
+        },
+      });
+
+      return userPage;
+    }),
 });
