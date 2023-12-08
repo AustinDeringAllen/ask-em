@@ -39,11 +39,24 @@ export const userRouter = createTRPCRouter({
           name: true,
           image: true,
           questions: {
+            where: {
+              answer: {
+                some: {
+                  body: { not: undefined },
+                },
+              },
+            },
             orderBy: {
               createdAt: "desc",
             },
             select: {
+              id: true,
               body: true,
+              answer: {
+                select: {
+                  body: true,
+                },
+              },
             },
           },
         },

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import NewQuestionModal from "~/components/NewQuestionModal";
+import UserQuestionList from "~/components/UserQuestionList";
 import { api } from "~/utils/api";
 
 export default function UserPage() {
@@ -44,8 +45,20 @@ export default function UserPage() {
       </div>
 
       <h2 className="text-center text-4xl">Recently answered questions</h2>
+      <UserQuestionList
+        uid={typeof router.query.uid === "string" ? router.query.uid : ""}
+      />
       {userPageData.questions.length > 0 ? (
-        "Questions"
+        <ul>
+          {userPageData.questions.map((question) => (
+            <li key={question.id} className="">
+              <div>
+                <h3 className="text-3xl font-bold">{question.body}</h3>
+                <p className="text-lg">{question.answer[0]?.body}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       ) : (
         <p>
           <span className="capitalize">{userPageData.name}</span> hasn't

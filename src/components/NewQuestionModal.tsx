@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { Button } from "./ui/button";
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Textarea } from "./ui/textarea";
+import { api } from "~/utils/api";
 
 export default function NewQuestionModal({
   uid,
@@ -10,11 +11,15 @@ export default function NewQuestionModal({
   uid: string;
   username: string;
 }) {
+  const newQuestionMutation = api.question.create.useMutation();
   const [questionText, setQuestionText] = useState("");
   const string = `Ask ${username} a question`;
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    if (questionText.trim() === "") return;
     e.preventDefault();
+    newQuestionMutation.mutate({ uid, body: questionText });
+    setQuestionText("");
   };
 
   return (
