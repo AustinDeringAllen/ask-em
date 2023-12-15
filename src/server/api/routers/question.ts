@@ -68,4 +68,16 @@ export const questionRouter = createTRPCRouter({
 
       return deleted;
     }),
+  getQuestionById: protectedProcedure
+    .input(z.object({ qid: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const question = await ctx.db.question.findFirst({
+        where: {
+          id: input.qid,
+          uid: ctx.session.user.id,
+        },
+      });
+
+      return question;
+    }),
 });

@@ -59,7 +59,7 @@ export default function AuthButton() {
             <Link href={`/user/${sessionData.user.id}`}>My Page</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href={`/user/answer`}>Answer Questions</Link>
+            <Link href={`/answer`}>Answer Questions</Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>

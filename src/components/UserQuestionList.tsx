@@ -3,9 +3,11 @@ import { api } from "~/utils/api";
 import Question from "./Question";
 import { MdDeleteOutline } from "react-icons/md";
 import AnswerQuestionModal from "./AnswerQuestionModal";
+import Link from "next/link";
 
 export default function UserQuestionList({ uid }: { uid: string }) {
   const [questions, setQuestions] = useState<typeof userQuestions>();
+
   const { data: userQuestions } = api.question.getUserQuestions.useQuery({
     uid,
   });
@@ -29,6 +31,7 @@ export default function UserQuestionList({ uid }: { uid: string }) {
     answerText: string,
   ) => {
     e.preventDefault();
+
     answerMutation.mutate({ qid: qid, answerBody: answerText });
     setQuestions((prev) => [...prev!].filter((el) => el.id !== qid));
   };
@@ -55,11 +58,16 @@ export default function UserQuestionList({ uid }: { uid: string }) {
             <Question question={question.body} />
           </div>
           <div>
-            <AnswerQuestionModal
-              qid={question.id}
-              questionText={question.body}
-              handleSubmit={handleAnswerSubmit}
-            />
+            <Link
+              href={`/answer?question=${question.id}`}
+              as={`/answer/${question.id}`}
+            >
+              <AnswerQuestionModal
+                qid={question.id}
+                questionText={question.body}
+                handleSubmit={handleAnswerSubmit}
+              />
+            </Link>
           </div>
         </div>
       ))}

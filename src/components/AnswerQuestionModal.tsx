@@ -3,7 +3,7 @@ import { MdKeyboardReturn } from "react-icons/md";
 import { Button } from "./ui/button";
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Textarea } from "./ui/textarea";
-import { api } from "~/utils/api";
+import { useRouter } from "next/navigation";
 
 export default function AnswerQuestionModal({
   qid,
@@ -18,10 +18,17 @@ export default function AnswerQuestionModal({
     answerText: string,
   ) => void;
 }) {
+  const router = useRouter();
   const [answerText, setAnswerText] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleOpenChange = () => {
+    if (open) router.push("/answer");
+    setOpen((prev) => !prev);
+  };
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={handleOpenChange}>
       <DialogTrigger>
         <Button className="group">
           Answer Question
