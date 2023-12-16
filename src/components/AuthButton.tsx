@@ -62,7 +62,7 @@ export default function AuthButton() {
             <Link href={`/answer`}>Answer Questions</Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem className="bg-red-500 text-white hover:cursor-pointer">
             <button onClick={() => signOut()}>Sign Out</button>
           </DropdownMenuItem>
         </DropdownMenuContent>

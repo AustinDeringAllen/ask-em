@@ -65,6 +65,7 @@ export default function UserQuestionList({ uid }: { uid: string }) {
               <AnswerQuestionModal
                 qid={question.id}
                 questionText={question.body}
+                originalRoute="/answer"
                 handleSubmit={handleAnswerSubmit}
               />
             </Link>

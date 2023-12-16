@@ -8,7 +8,7 @@ import {
 
 export const questionRouter = createTRPCRouter({
   create: publicProcedure
-    .input(z.object({ body: z.string().min(1), uid: z.string() }))
+    .input(z.object({ body: z.string().min(1), uid: z.string().nullable() }))
     .mutation(async ({ ctx, input }) => {
       const newQuestion = await ctx.db.question.create({
         data: {
@@ -80,4 +80,18 @@ export const questionRouter = createTRPCRouter({
 
       return question;
     }),
+  getAllPublicQuestions: publicProcedure.query(async ({ ctx }) => {
+    const questions = await ctx.db.question.findMany({
+      where: {
+        uid: null,
+      },
+      select: {
+        id: true,
+        body: true,
+        createdAt: true,
+      },
+    });
+
+    return questions;
+  }),
 });

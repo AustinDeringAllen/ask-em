@@ -23,7 +23,7 @@ export default function UserPage() {
               src={userPageData.image ?? ""}
               fill
               objectFit="cover"
-              alt=""
+              alt={`Profile picture belonging to ${userPageData.name}`}
               className="rounded-full border border-black"
             />
           </div>

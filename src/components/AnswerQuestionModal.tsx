@@ -8,10 +8,12 @@ import { useRouter } from "next/navigation";
 export default function AnswerQuestionModal({
   qid,
   questionText,
+  originalRoute,
   handleSubmit,
 }: {
   qid: string;
   questionText: string;
+  originalRoute: string;
   handleSubmit: (
     e: FormEvent<HTMLFormElement>,
     qid: string,
@@ -23,11 +25,12 @@ export default function AnswerQuestionModal({
   const [open, setOpen] = useState(false);
 
   const handleOpenChange = () => {
-    if (open) router.push("/answer");
+    if (open) router.push(originalRoute);
     setOpen((prev) => !prev);
   };
 
   return (
+    // open change doesn't account for clicking outside of the modal?
     <Dialog onOpenChange={handleOpenChange}>
       <DialogTrigger>
         <Button className="group">
